@@ -21,7 +21,7 @@ puvvlo
 
 import numpy as np
 
-def gj_reduction(matrix: np.ndarray, give_syspar: bool=False ) -> any:
+def gj_reduction(matrix: np.ndarray, tol = 1e-12, give_syspar: bool=False ) -> any:
     '''
     Uses Gauss-Jordan reduction method to reduce a given matrix of any shape. 
     If specified, it also gives parameters of the system associated with the matrix:
@@ -36,6 +36,10 @@ def gj_reduction(matrix: np.ndarray, give_syspar: bool=False ) -> any:
         If set to True, it gives the parameters of the system associated
         with the given matrix: number of unknows and stairs of the reduced
         augmented and coefficient matrices.
+
+    `tol`: float
+        It sets the tolerance value by wich the elements are compared: every 
+        value below `tol` is set to zero to avoid data precision issues.
 
     Returns
     -------
@@ -76,6 +80,9 @@ def gj_reduction(matrix: np.ndarray, give_syspar: bool=False ) -> any:
     #We start reducing the matrix
     k, l = 0, 0     # Row and column indices
     while (k <= m-1) and (l <= n-1):
+        
+        # 0. Set to zero every single value below tolerance
+        A[A < tol] = 0
 
         # 1. Prepare the rows by switching/pivoting accordingly
 
