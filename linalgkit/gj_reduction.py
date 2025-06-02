@@ -82,7 +82,7 @@ def gj_reduction(matrix: np.ndarray, tol = 1e-12, give_syspar: bool=False ) -> a
     while (k <= m-1) and (l <= n-1):
         
         # 0. Set to zero every single value below tolerance
-        A[A < tol] = 0
+        A[np.abs(A) < tol] = 0
 
         # 1. Prepare the rows by switching/pivoting accordingly
 
